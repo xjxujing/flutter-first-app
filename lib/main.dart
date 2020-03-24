@@ -7,9 +7,19 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
+class Datas {
+  String text;
+  String author;
+
+  Datas({this.text, this.author});
+}
+
 class _HomeState extends State<Home> {
-//  定义一个列表
-  List<String> datas = ["hello world", "hello flutter", "hello niuniu"];
+  List<Datas> datas = [
+    Datas(text: "hello", author: "lucy"),
+    Datas(text: "hello", author: "niuniu"),
+    Datas(text: "hello", author: "lufei"),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +34,8 @@ class _HomeState extends State<Home> {
 //        children: datas.map((data){
 //          return Text(data);
 //        }).toList(),
-        children: datas.map((data) => Text(data)).toList(),
+        children:
+            datas.map((data) => Text('${data.text}:${data.author}')).toList(),
 //        children: <Widget>[
 //          Text("hello world"),
 //          Text("hello flutter"),
