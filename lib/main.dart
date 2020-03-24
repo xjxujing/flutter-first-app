@@ -8,6 +8,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int level = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,6 +18,15 @@ class _HomeState extends State<Home> {
         title: Text("个人介绍"),
         centerTitle: true,
         backgroundColor: Colors.grey[850],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            level += 1;
+          });
+        },
+        backgroundColor: Colors.grey[800],
+        child: Icon(Icons.add),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0),
@@ -50,10 +61,10 @@ class _HomeState extends State<Home> {
                     fontWeight: FontWeight.bold,
                     fontSize: 28.0)),
             SizedBox(height: 30.0),
-            Text("岗位",
+            Text("等级",
                 style: TextStyle(color: Colors.grey, letterSpacing: 2.0)),
             SizedBox(height: 10.0),
-            Text("Node.js 开发",
+            Text("$level",
                 style: TextStyle(
                     color: Colors.amberAccent[200],
                     fontWeight: FontWeight.bold,
