@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'dart:convert';
+import 'package:first_app/services/world_time.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -8,37 +7,33 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  void getData() async {
-    // http request
-    Response response = await get("http://worldclockapi.com/api/json/est/now");
-    // 把 json 数据转成 map 类型
-    Map data = jsonDecode(response.body);
-    // print(data);
-    String currentDateTime = data["currentDateTime"];
-    String offset = data["utcOffset"].substring(1, 3);
-    // 上面获取到的当前时间和与格林威治相差的时间
+  String time = "loading";
 
-    // 创建时间对象，还原时间
-    DateTime now = DateTime.parse(currentDateTime);
-    now = now.add(Duration(hours: int.parse(offset)));
-    print(now);
+  void setupWorldTime() async {
+    WorldTime instance = WorldTime(location: "北京", flag: "China.png", url: "Asia/Shanghai");
+    await instance.getData();
+
+    // 状态更新
+    setState(() {
+      time = instance.time;
+    });
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-//    print("initState function ran");
 
-    getData();
-
-//    print("我的位置在 getData() 之后");
+    setupWorldTime();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("loading screen"),
+      body: Padding(
+        padding: const EdgeInsets.all(50.0),
+        child: Text(time),
+      ),
     );
   }
 }
